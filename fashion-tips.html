@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Tips - Aeroribe</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #FFFF;
+        }
+
+        /* Header styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #000;
+            border-bottom: 2px solid #0071E3;
+        }
+
+        .left-icons {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .left-logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .left-logo img {
+            height: 45px;
+            width: auto;
+        }
+
+        .icon-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .icon-container img {
+            max-height: 20px;
+            width: auto;
+        }
+
+        .icon-container span {
+            color: #fff;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .icon-container:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Cart count styling */
+        .cart-count {
+            background-color: #0071E3;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+
+        .logo-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 500px;
+            margin: 0 30px;
+        }
+        
+        .logo-container img {
+            height: 60px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        .right-icons {
+            display: flex;
+            gap: 25px;
+        }
+
+        /* Mobile Header Styles */
+        @media (max-width: 768px) {
+            .header {
+                padding: 10px 15px;
+            }
+
+            .left-icons {
+                gap: 15px;
+            }
+
+            .icon-container span {
+                font-size: 10px;
+            }
+
+            .logo-container {
+                margin: 0 15px;
+            }
+
+            .logo-container img {
+                height: 40px;
+            }
+
+            .right-icons {
+                gap: 15px;
+            }
+
+            .icon-container i {
+                font-size: 18px;
+            }
+
+            .left-logo img {
+                height: 35px;
+            }
+        }
+
+        /* Main content styles */
+        .main-content {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            opacity: 0;
+            animation: smoothFadeIn 1s ease-out forwards;
+        }
+
+        @keyframes smoothFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .category-tabs {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            align-items: center;
+            opacity: 0;
+            animation: slideIn 0.8s ease-out 0.2s forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .category-tab {
+            padding: 0.8rem 1.5rem;
+            background: #fff;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+            font-size: 1rem;
+            text-align: center;
+            white-space: nowrap;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .category-tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .category-tab.active {
+            background: #f0f0f0;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .category-header {
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        .category-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .category-description {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 800px;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.05);
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .blog-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: #000;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background 0.3s;
+            align-self: flex-end;
+            margin-top: auto;
+        }
+
+        .read-more:hover {
+            background: var(--accent1);
+        }
+
+        /* Footer styles */
+        .footer {
+            background: #333;
+            color: #fff;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: space-around;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section {
+            font-size: 12px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            margin: 5px 0;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent1);
+        }
+
+        /* Menu icon container */
+        .menu-icon-container {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-icon-container:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="left-icons">
+            <a href="#" class="icon-container" id="sidebar-toggle">
+                <i class="fas fa-bars" style="color: #fff; font-size: 20px;"></i>
+                <span>Menu</span>
+            </a>
+            <a href="main_shop.html" class="icon-container">
+                <i class="fas fa-store" style="color: #fff; font-size: 20px;"></i>
+                <span>Shop</span>
+            </a>
+            <a href="blogpage.html" class="icon-container">
+                <i class="fas fa-blog" style="color: #fff; font-size: 20px;"></i>
+                <span>Blog</span>
+            </a>
+        </div>
+        <div class="logo-container">
+            <img src="Neon Green Modern Graffiti Urban Spray Logo (1).png" alt="aeroribe Logo">
+        </div>
+        <div class="right-icons">
+            <a href="CART_PAGE.html" class="icon-container">
+                <i class="fas fa-shopping-cart" style="color: #fff; font-size: 20px;"></i>
+                <span>Cart</span>
+                <span class="cart-count">0</span>
+            </a>
+            <a href="account.html" class="icon-container" style="flex-direction: row; align-items: center; gap: 6px;">
+                <i class="fas fa-user" style="color: #fff; font-size: 20px;"></i>
+                <span style="color: #fff; font-size: 13px; font-weight: 500;">Account</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <div class="sidebar-header">
+                <i class="fas fa-times close-sidebar" id="close-sidebar"></i>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="main_shop.html">SHOP</a></li>
+                <li><a href="new_arrival.html">MENS</a></li>
+                <li><a href="womens_new_arrival.html">WOMENS</a></li>
+                <li><a href="kids_new_arrival.html">KIDS</a></li>
+                <li><a href="blogpage.html">BLOG</a></li>
+                <li><a href="CART_PAGE.html">CART</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebar-overlay"></div>
+
+    <main class="main-content">
+        <div class="category-tabs">
+            <a href="fashion-tips.html" class="category-tab active">Fashion Tips</a>
+            <a href="styling-guides.html" class="category-tab">Styling Guides</a>
+            <a href="industry-news.html" class="category-tab">Industry News</a>
+            <a href="behind-scenes.html" class="category-tab">Behind The Scenes</a>
+        </div>
+
+        <div class="category-header">
+            <h1 class="category-title">Fashion Tips</h1>
+            <p class="category-description">Discover the latest fashion trends, style advice, and tips to elevate your wardrobe.</p>
+        </div>
+
+        <section class="blog-grid">
+            <article class="blog-card">
+                <div class="blog-image">
+                    <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Essential Wardrobe Basics">
+                </div>
+                <div class="blog-content">
+                    <h2 class="blog-title">Essential Wardrobe Basics</h2>
+                    <p class="blog-excerpt">Learn about the must-have pieces that form the foundation of a versatile and stylish wardrobe.</p>
+                    <a href="#" class="read-more">See More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="blog-image">
+                    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Seasonal Color Trends">
+                </div>
+                <div class="blog-content">
+                    <h2 class="blog-title">Seasonal Color Trends</h2>
+                    <p class="blog-excerpt">Stay ahead of the curve with the latest color trends for the upcoming season.</p>
+                    <a href="#" class="read-more">See More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="blog-image">
+                    <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80" alt="Accessorizing Like a Pro">
+                </div>
+                <div class="blog-content">
+                    <h2 class="blog-title">Accessorizing Like a Pro</h2>
+                    <p class="blog-excerpt">Master the art of accessorizing to transform your outfits from basic to brilliant.</p>
+                    <a href="#" class="read-more">See More</a>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <div class="footer-section">
+                <h4>Privacy Policy</h4>
+                <a href="privacy_policy.html">Data Collection & Usage</a>
+                <a href="#">Cookie Policy</a>
+                <a href="#">Terms & Conditions</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <a href="#">Email Us</a>
+                <a href="#">Phone Number</a>
+                <a href="#">Social Media Links</a>
+            </div>
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <a href="#">About Store</a>
+                <a href="#">Mission & Vision</a>
+                <a href="#">Ethics Practices</a>
+            </div>
+            <div class="footer-section">
+                <h4>Customer Service</h4>
+                <a href="#">Help Center</a>
+                <a href="#">Shipping Delivery</a>
+                <a href="#">Payment Methods</a>
+                <a href="#">FAQ</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="javascript_sidebar.js"></script>
+</body>
+</html> 

@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Details - Streetwear Fashion</title>
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 15px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 15px;
+      display: flex;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #1D1D1F, #0071E3);
+    }
+    .product-image {
+      width: 300px;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .product-image:hover {
+      transform: scale(1.02);
+    }
+    .product-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: relative;
+    }
+    .product-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 5px;
+      background: linear-gradient(45deg, #333, #666);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.3s ease;
+    }
+    .product-title:hover {
+      transform: translateX(5px);
+    }
+    .product-brand {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    .product-price {
+      font-size: 1.3rem;
+      color: #0071E3;
+      font-weight: bold;
+      margin-bottom: 8px;
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(0, 113, 227, 0.1);
+      border-radius: 6px;
+    }
+    .product-description {
+      margin: 10px 0;
+      line-height: 1.4;
+      color: #555;
+      font-size: 0.9rem;
+      position: relative;
+      padding-left: 12px;
+      border-left: 2px solid #0071E3;
+    }
+    .product-specs {
+      background: #f8f9fa;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 10px 0;
+      border: 1px solid #eee;
+      transition: all 0.3s ease;
+    }
+    .product-specs:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    .spec-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid #eee;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+    .spec-item:hover {
+      background: rgba(0, 113, 227, 0.05);
+      padding-left: 10px;
+    }
+    .spec-item:last-child {
+      border-bottom: none;
+    }
+    .spec-label {
+      color: #666;
+      font-weight: 600;
+    }
+    .spec-value {
+      color: #333;
+      font-weight: 500;
+    }
+    .product-variations {
+      margin-bottom: 20px;
+    }
+    .size-option {
+      display: inline-block;
+      padding: 6px 12px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      margin-right: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-bottom: 6px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    .size-option:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-color: #0071E3;
+    }
+    .size-option.selected {
+      background: #0071E3;
+      color: #fff;
+      border-color: #0071E3;
+    }
+    .add-to-cart-btn, .buy-now-btn {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 10px 0;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 6px;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+    .add-to-cart-btn:hover, .buy-now-btn:hover {
+      background: #333;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .add-to-cart-btn:active, .buy-now-btn:active {
+      transform: translateY(0);
+    }
+    .buy-now-btn {
+      background: #0071E3;
+      margin-top: 12px;
+    }
+    .buy-now-btn:hover {
+      background: #0062c3;
+    }
+    .wishlist-btn {
+      background: #fff;
+      color: #333;
+      border: 2px solid #ddd;
+      padding: 10px 0;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 12px;
+      width: 100%;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .wishlist-btn:hover {
+      background: #f8f9fa;
+      border-color: #0071E3;
+      color: #0071E3;
+    }
+    .wishlist-btn.active {
+      background: #0071E3;
+      color: #fff;
+      border-color: #0071E3;
+    }
+    .wishlist-btn i {
+      transition: transform 0.3s ease;
+    }
+    .wishlist-btn:hover i {
+      transform: scale(1.2);
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      background: #fff;
+      color: #333;
+      border: 2px solid #eee;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .back-btn:hover {
+      background: #f8f9fa;
+      transform: translateX(-5px);
+      border-color: #ddd;
+    }
+    .reviews-section {
+      max-width: 900px;
+      margin: 20px auto 0 auto;
+      padding: 15px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .reviews-section h2 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+    }
+    .review-stats {
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .rating-number {
+      font-size: 2.5rem;
+    }
+    .rating-stars {
+      color: #ffd700;
+      font-size: 1.2rem;
+      margin: 5px 0;
+    }
+    .rating-count {
+      color: #666;
+      font-size: 0.9rem;
+    }
+    .rating-bars {
+      flex: 1;
+    }
+    .rating-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 5px 0;
+    }
+    .rating-label {
+      width: 80px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    .rating-progress {
+      flex: 1;
+      height: 8px;
+      background: #eee;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .rating-progress-fill {
+      height: 100%;
+      background: #ffd700;
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    .review {
+      padding: 15px 0;
+    }
+    .review:hover {
+      background: #f8f9fa;
+      padding-left: 10px;
+    }
+    .review:last-child {
+      border-bottom: none;
+    }
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .reviewer-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .reviewer-avatar {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #666;
+    }
+    .reviewer {
+      font-size: 1rem;
+    }
+    .review-date {
+      font-size: 0.8rem;
+    }
+    .review-rating {
+      color: #ffd700;
+      margin: 5px 0;
+    }
+    .review-content {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    .review-images {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    .review-image {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .review-image:hover {
+      transform: scale(1.1);
+    }
+    .review-actions {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+    }
+    .review-action {
+      color: #666;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.3s ease;
+    }
+    .review-action:hover {
+      color: #0071E3;
+    }
+    .write-review-btn {
+      background: #0071E3;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .write-review-btn:hover {
+      background: #0062c3;
+      transform: translateY(-2px);
+    }
+    .review-form {
+      display: none;
+      margin-top: 30px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 12px;
+    }
+    .review-form.active {
+      display: block;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 500;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #0071E3;
+      outline: none;
+    }
+    .rating-input {
+      display: flex;
+      gap: 5px;
+    }
+    .rating-input i {
+      color: #ddd;
+      cursor: pointer;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+    .rating-input i.active {
+      color: #ffd700;
+    }
+    .submit-review-btn {
+      background: #0071E3;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .submit-review-btn:hover {
+      background: #0062c3;
+      transform: translateY(-2px);
+    }
+    .related-section {
+      max-width: 900px;
+      margin: 30px auto 0 auto;
+      padding: 0 15px;
+    }
+    .related-section h2 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+    }
+    .related-products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+    }
+    .product-card {
+      padding: 12px;
+    }
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent1), #ff8f3e);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+    .product-card:hover::before {
+      opacity: 1;
+    }
+    .product-card-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover .product-card-image {
+      transform: scale(1.05);
+    }
+    .product-card-title {
+      font-size: 1rem;
+    }
+    .product-card-brand {
+      font-size: 0.8rem;
+    }
+    .product-card-price {
+      font-size: 1rem;
+    }
+    .product-card-specs {
+      font-size: 0.8rem;
+    }
+    .product-card-spec {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      transition: all 0.3s ease;
+    }
+    .product-card-spec:hover {
+      color: #333;
+      transform: translateX(5px);
+    }
+    .product-card-spec:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="history.back()" class="back-btn"><i class="fas fa-arrow-left"></i> Back</button>
+  <div class="container">
+    <img class="product-image" id="productImage" src="" alt="Product Image">
+    <div class="product-details">
+      <div class="product-title" id="productName">Product Name</div>
+      <div class="product-brand" id="productBrand">Brand</div>
+      <div class="product-price" id="productPrice">₱0.00</div>
+      <div class="product-description" id="productDescription">
+        Experience the perfect blend of style and comfort with our premium streetwear collection. 
+        This carefully crafted piece features high-quality materials and contemporary design elements 
+        that make it a must-have addition to your wardrobe.
+      </div>
+      <div class="product-specs">
+        <div class="spec-item">
+          <span class="spec-label">Material</span>
+          <span class="spec-value" id="productMaterial">100% Premium Cotton</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Care Instructions</span>
+          <span class="spec-value" id="productCare">Machine wash cold, tumble dry low</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Style</span>
+          <span class="spec-value" id="productStyle">Casual, Streetwear</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Country of Origin</span>
+          <span class="spec-value" id="productOrigin">Philippines</span>
+        </div>
+      </div>
+      <div class="product-variations" id="productVariations"></div>
+      <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+      <button class="wishlist-btn" id="wishlistBtn"><i class="far fa-heart"></i> Add to Wishlist</button>
+      <button class="buy-now-btn"><i class="fas fa-bolt"></i> Buy Now</button>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <h2>
+      Customer Reviews
+      <button class="write-review-btn" onclick="toggleReviewForm()">
+        <i class="fas fa-pen"></i>
+        Write a Review
+      </button>
+    </h2>
+    
+    <div class="review-stats">
+      <div class="overall-rating">
+        <div class="rating-number">4.8</div>
+        <div class="rating-stars">★★★★★</div>
+        <div class="rating-count">Based on 156 reviews</div>
+      </div>
+      <div class="rating-bars">
+        <div class="rating-bar">
+          <div class="rating-label">5 stars</div>
+          <div class="rating-progress">
+            <div class="rating-progress-fill" style="width: 80%"></div>
+          </div>
+          <div class="rating-count">125</div>
+        </div>
+        <div class="rating-bar">
+          <div class="rating-label">4 stars</div>
+          <div class="rating-progress">
+            <div class="rating-progress-fill" style="width: 15%"></div>
+          </div>
+          <div class="rating-count">23</div>
+        </div>
+        <div class="rating-bar">
+          <div class="rating-label">3 stars</div>
+          <div class="rating-progress">
+            <div class="rating-progress-fill" style="width: 3%"></div>
+          </div>
+          <div class="rating-count">5</div>
+        </div>
+        <div class="rating-bar">
+          <div class="rating-label">2 stars</div>
+          <div class="rating-progress">
+            <div class="rating-progress-fill" style="width: 1%"></div>
+          </div>
+          <div class="rating-count">2</div>
+        </div>
+        <div class="rating-bar">
+          <div class="rating-label">1 star</div>
+          <div class="rating-progress">
+            <div class="rating-progress-fill" style="width: 1%"></div>
+          </div>
+          <div class="rating-count">1</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review">
+      <div class="review-header">
+        <div class="reviewer-info">
+          <div class="reviewer-avatar">JD</div>
+          <div>
+            <div class="reviewer">John Doe</div>
+            <div class="review-date">March 15, 2024</div>
+          </div>
+        </div>
+        <div class="review-rating">★★★★★</div>
+      </div>
+      <div class="review-content">
+        Absolutely love this product! The quality is exceptional and it fits perfectly. The material is comfortable and the design is exactly as shown in the pictures. Would definitely recommend!
+      </div>
+      <div class="review-images">
+        <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b" alt="Review image" class="review-image">
+        <img src="https://images.unsplash.com/photo-1523381294911-8d3cead13475" alt="Review image" class="review-image">
+      </div>
+      <div class="review-actions">
+        <div class="review-action">
+          <i class="fas fa-thumbs-up"></i>
+          <span>Helpful (24)</span>
+        </div>
+        <div class="review-action">
+          <i class="fas fa-comment"></i>
+          <span>Reply</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="review">
+      <div class="review-header">
+        <div class="reviewer-info">
+          <div class="reviewer-avatar">JS</div>
+          <div>
+            <div class="reviewer">Jane Smith</div>
+            <div class="review-date">March 10, 2024</div>
+          </div>
+        </div>
+        <div class="review-rating">★★★★☆</div>
+      </div>
+      <div class="review-content">
+        Great product overall! The quality is good and it looks exactly like the pictures. The only reason I'm giving 4 stars is because the shipping took longer than expected. Otherwise, very satisfied with the purchase.
+      </div>
+      <div class="review-actions">
+        <div class="review-action">
+          <i class="fas fa-thumbs-up"></i>
+          <span>Helpful (12)</span>
+        </div>
+        <div class="review-action">
+          <i class="fas fa-comment"></i>
+          <span>Reply</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-form">
+      <div class="form-group">
+        <label>Rating</label>
+        <div class="rating-input">
+          <i class="fas fa-star" onclick="setRating(1)"></i>
+          <i class="fas fa-star" onclick="setRating(2)"></i>
+          <i class="fas fa-star" onclick="setRating(3)"></i>
+          <i class="fas fa-star" onclick="setRating(4)"></i>
+          <i class="fas fa-star" onclick="setRating(5)"></i>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Review Title</label>
+        <input type="text" placeholder="Summarize your experience">
+      </div>
+      <div class="form-group">
+        <label>Your Review</label>
+        <textarea rows="5" placeholder="Tell us about your experience with this product"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Add Photos (Optional)</label>
+        <input type="file" multiple accept="image/*">
+      </div>
+      <button class="submit-review-btn" onclick="submitReview()">Submit Review</button>
+    </div>
+  </div>
+  <div class="related-section">
+    <h2>Related Products</h2>
+    <div id="relatedProducts" class="related-products"></div>
+  </div>
+  <script src="javascript_sidebar.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load product data from localStorage
+      const product = JSON.parse(localStorage.getItem('selectedProduct'));
+      if (!product) {
+        window.location.href = 'new_arrival.html';
+        return;
+      }
+
+      // Initialize wishlist
+      const wishlistBtn = document.getElementById('wishlistBtn');
+      const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      const isInWishlist = wishlist.some(item => item.name === product.name && item.brand === product.brand);
+      
+      if (isInWishlist) {
+        wishlistBtn.classList.add('active');
+        wishlistBtn.innerHTML = '<i class="fas fa-heart"></i> Remove from Wishlist';
+      }
+
+      // Wishlist button click handler
+      wishlistBtn.onclick = function() {
+        const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const productIndex = wishlist.findIndex(item => item.name === product.name && item.brand === product.brand);
+        
+        if (productIndex === -1) {
+          // Add to wishlist
+          wishlist.push({
+            name: product.name,
+            brand: product.brand,
+            image: product.image,
+            price: product.price,
+            material: product.material,
+            style: product.style
+          });
+          wishlistBtn.classList.add('active');
+          wishlistBtn.innerHTML = '<i class="fas fa-heart"></i> Remove from Wishlist';
+          showNotification('Added to wishlist');
+        } else {
+          // Remove from wishlist
+          wishlist.splice(productIndex, 1);
+          wishlistBtn.classList.remove('active');
+          wishlistBtn.innerHTML = '<i class="far fa-heart"></i> Add to Wishlist';
+          showNotification('Removed from wishlist');
+        }
+        
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      };
+
+      // Update product details
+      document.getElementById('productImage').src = product.image;
+      document.getElementById('productName').textContent = product.name;
+      document.getElementById('productBrand').textContent = product.brand;
+      document.getElementById('productPrice').textContent = product.price;
+      document.getElementById('productDescription').textContent = product.description;
+      document.getElementById('productMaterial').textContent = product.material;
+      document.getElementById('productCare').textContent = product.care;
+      document.getElementById('productStyle').textContent = product.style;
+      document.getElementById('productOrigin').textContent = product.origin;
+
+      // Create size options
+      const variationsDiv = document.getElementById('productVariations');
+      variationsDiv.innerHTML = '';
+      product.sizes.forEach(size => {
+        const sizeOption = document.createElement('div');
+        sizeOption.className = 'size-option';
+        sizeOption.textContent = size;
+        sizeOption.onclick = function() {
+          document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
+          this.classList.add('selected');
+        };
+        variationsDiv.appendChild(sizeOption);
+      });
+
+      // Add to Cart button logic
+      document.querySelector('.add-to-cart-btn').onclick = function() {
+        const selectedSize = document.querySelector('.size-option.selected');
+        if (!selectedSize) {
+          showNotification('Please select a size', true);
+          return;
+        }
+
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.push({
+          name: product.name,
+          brand: product.brand,
+          image: product.image,
+          price: parseFloat(product.price.replace(/[^\d.]/g, '')),
+          size: selectedSize.textContent,
+          quantity: 1
+        });
+        localStorage.setItem('cart', JSON.stringify(cart));
+        showNotification('Item added to cart');
+      };
+
+      // Buy Now button logic
+      document.querySelector('.buy-now-btn').onclick = function() {
+        const selectedSize = document.querySelector('.size-option.selected');
+        if (!selectedSize) {
+          showNotification('Please select a size', true);
+          return;
+        }
+
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.push({
+          name: product.name,
+          brand: product.brand,
+          image: product.image,
+          price: parseFloat(product.price.replace(/[^\d.]/g, '')),
+          size: selectedSize.textContent,
+          quantity: 1
+        });
+        localStorage.setItem('cart', JSON.stringify(cart));
+        showNotification('Item added to cart');
+        setTimeout(() => { window.location.href = 'CART_PAGE.html'; }, 800);
+      };
+    });
+
+    // --- Feedback/Review Form Logic ---
+    // Store reviews in localStorage by product id (name+brand)
+    const productKey = (product.name + '_' + (product.brand || '')).replace(/\s+/g, '_');
+    function getStoredReviews() {
+      return JSON.parse(localStorage.getItem('reviews_' + productKey)) || product.reviews || [];
+    }
+    function saveStoredReviews(reviews) {
+      localStorage.setItem('reviews_' + productKey, JSON.stringify(reviews));
+    }
+    // Render reviews
+    function renderReviews() {
+      const reviewsList = document.getElementById('reviewsList');
+      const reviews = getStoredReviews();
+      reviewsList.innerHTML = '';
+      if (reviews.length) {
+        reviews.forEach(r => {
+          const div = document.createElement('div');
+          div.className = 'review';
+          div.innerHTML = `<span class="reviewer">${r.reviewer}</span> <span class="review-rating">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span><div class="review-text">${r.text}</div>`;
+          reviewsList.appendChild(div);
+        });
+      } else {
+        reviewsList.innerHTML = '<div>No reviews yet.</div>';
+      }
+    }
+    renderReviews();
+    // Handle review form submit (with error message)
+    document.getElementById('reviewForm').onsubmit = function(e) {
+      e.preventDefault();
+      const reviewer = document.getElementById('reviewerName').value.trim();
+      const rating = parseInt(document.getElementById('reviewRating').value);
+      const text = document.getElementById('reviewText').value.trim();
+      if (!reviewer || !rating || !text) {
+        showNotification('Please complete all fields and select a rating.', true);
+        return;
+      }
+      const reviews = getStoredReviews();
+      reviews.unshift({ reviewer, rating, text });
+      saveStoredReviews(reviews);
+      renderReviews();
+      this.reset();
+      showNotification('Thank you for your feedback!');
+    };
+
+    // --- Related Products Logic ---
+    // Demo related products (could be improved to use real data)
+    const allProducts = [
+      {
+        image: 'https://image.uniqlo.com/UQ/ST3/ph/imagesgoods/480144/item/phgoods_00_480144_3x4.jpg?width=294',
+        name: 'Limited Edition Graphic Tee',
+        brand: 'Penshoppe',
+        price: '₱599.00',
+        sizes: ['S', 'M', 'L', 'XL'],
+        material: '100% Premium Cotton',
+        care: 'Machine wash cold, tumble dry low',
+        style: 'Casual, Streetwear',
+        origin: 'Philippines',
+        description: 'Experience the perfect blend of style and comfort with our premium streetwear collection. This carefully crafted piece features high-quality materials and contemporary design elements that make it a must-have addition to your wardrobe.'
+      },
+      {
+        image: 'https://shop.mango.com/assets/rcs/pics/static/T8/fotos/S/87040377_46.jpg?imwidth=2048&imdensity=1&ts=1730910884241',
+        name: 'Floral Print Blouse',
+        brand: 'Penshoppe',
+        price: '₱699.00',
+        sizes: ['S', 'M', 'L'],
+        material: 'Polyester Blend',
+        care: 'Hand wash cold, line dry',
+        style: 'Casual, Summer',
+        origin: 'Philippines',
+        description: 'A beautiful floral print blouse perfect for summer days. Made with lightweight, breathable fabric that keeps you cool and comfortable.'
+      },
+      {
+        image: 'https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/b7d9211c-26e7-431a-ac24-b0540fb3c00f/AIR+FORCE+1+%2707.png',
+        name: "Air Force 1 '07",
+        brand: 'Nike',
+        price: '₱4,396.00',
+        sizes: ['UK 8', 'UK 9', 'UK 10'],
+        material: 'Leather and Synthetic',
+        care: 'Clean with damp cloth, air dry',
+        style: 'Athletic, Streetwear',
+        origin: 'Vietnam',
+        description: 'The iconic Air Force 1 sneaker, featuring premium leather construction and classic design elements that have made it a streetwear staple.'
+      },
+      {
+        image: 'https://img.kwcdn.com/product/fancy/3354c053-a613-4b00-9c06-eeec24fb0afe.jpg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp',
+        name: 'Floral Summer Dress',
+        brand: 'H&M',
+        price: '₱1,299.00',
+        sizes: ['XS', 'S', 'M', 'L'],
+        material: 'Cotton Blend',
+        care: 'Machine wash cold, hang dry',
+        style: 'Summer, Casual',
+        origin: 'Bangladesh',
+        description: 'A beautiful floral summer dress perfect for warm days. Features a flattering silhouette and comfortable, breathable fabric.'
+      }
+    ];
+    // Exclude current product
+    const related = allProducts.filter(p => p.name !== product.name).slice(0, 4);
+    const relatedDiv = document.getElementById('relatedProducts');
+    related.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <img src="${p.image}" alt="${p.name}" class="product-card-image">
+        <div class="product-card-title">${p.name}</div>
+        <div class="product-card-brand">${p.brand}</div>
+        <div class="product-card-price">${p.price}</div>
+        <div class="product-card-specs">
+          <div class="product-card-spec">
+            <span>Material:</span>
+            <span>${p.material}</span>
+          </div>
+          <div class="product-card-spec">
+            <span>Style:</span>
+            <span>${p.style}</span>
+          </div>
+        </div>
+      `;
+      card.onclick = function() {
+        localStorage.setItem('selectedProduct', JSON.stringify(p));
+        window.location.href = 'solo_product.html';
+      };
+      relatedDiv.appendChild(card);
+    });
+
+    function toggleReviewForm() {
+      const form = document.querySelector('.review-form');
+      form.classList.toggle('active');
+    }
+
+    function setRating(rating) {
+      const stars = document.querySelectorAll('.rating-input i');
+      stars.forEach((star, index) => {
+        if (index < rating) {
+          star.classList.add('active');
+        } else {
+          star.classList.remove('active');
+        }
+      });
+    }
+
+    function submitReview() {
+      // Add review submission logic here
+      alert('Thank you for your review!');
+      document.querySelector('.review-form').classList.remove('active');
+    }
+
+    // Initialize rating stars
+    document.querySelectorAll('.rating-input i').forEach((star, index) => {
+      star.addEventListener('mouseover', () => {
+        for (let i = 0; i <= index; i++) {
+          document.querySelectorAll('.rating-input i')[i].classList.add('active');
+        }
+      });
+
+      star.addEventListener('mouseout', () => {
+        document.querySelectorAll('.rating-input i').forEach(s => s.classList.remove('active'));
+      });
+    });
+
+    // Notification (updated for error/success)
+    function showNotification(message, isError = false) {
+      let notif = document.getElementById('notification');
+      if (!notif) {
+        notif = document.createElement('div');
+        notif.id = 'notification';
+        notif.style.position = 'fixed';
+        notif.style.top = '30px';
+        notif.style.right = '30px';
+        notif.style.background = '#222';
+        notif.style.color = '#fff';
+        notif.style.padding = '14px 28px';
+        notif.style.borderRadius = '6px';
+        notif.style.zIndex = '9999';
+        notif.style.fontSize = '1rem';
+        notif.style.opacity = '0';
+        notif.style.transition = 'opacity 0.3s';
+        document.body.appendChild(notif);
+      }
+      notif.textContent = message;
+      notif.style.background = isError ? '#d32f2f' : '#222';
+      notif.style.color = isError ? '#fff' : '#fff';
+      notif.style.opacity = '1';
+      setTimeout(() => { notif.style.opacity = '0'; }, 2200);
+    }
+  </script>
+</body>
+</html> 

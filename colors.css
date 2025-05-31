@@ -1,0 +1,133 @@
+:root {
+    /* Primary Colors */
+    --primary: #000000;
+    --secondary: #F5F5F7;
+    --accent1: #0071E3;
+    --accent2: #333333;
+    --background: #FFFFFF;
+    
+    /* Text Colors */
+    --text-primary: #1C1C1E;
+    --text-secondary: #6E6E73;
+}
+
+/* Apply colors to common elements */
+body {
+    background-color: var(--background);
+    color: var(--text-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary);
+}
+
+p {
+    color: var(--text-primary);
+}
+
+a {
+    color: var(--accent1);
+}
+
+a:hover {
+    color: var(--accent2);
+}
+
+/* Button styles */
+.btn-primary {
+    background-color: var(--accent1);
+    color: var(--background);
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    color: var(--primary);
+}
+
+/* Card and container styles */
+.card, .container {
+    background-color: var(--background);
+    border: 1px solid var(--secondary);
+}
+
+/* Form elements */
+input, textarea, select {
+    background-color: var(--background);
+    color: var(--text-primary);
+    border: 1px solid var(--secondary);
+}
+
+/* Navigation */
+nav {
+    background-color: var(--primary);
+    color: var(--background);
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary);
+    color: var(--secondary);
+}
+
+/* Cart Icon Styling */
+.icon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.icon-container span {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.icon-container:hover {
+  transform: translateY(-2px);
+}
+
+.icon-container i {
+  color: #fff;
+  font-size: 20px;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ff3e3e;
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+/* Add to Cart Button Styling */
+.add-to-cart-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #333;
+}
+
+.add-to-cart-btn i {
+  font-size: 16px;
+} 

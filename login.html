@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Page</title>
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #FFFF; color: #333; }
+    .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background-color: #000; border-bottom: 2px solid #0071E3; }
+    .left-icons { display: flex; align-items: center; gap: 25px; }
+    .icon-container { display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none; cursor: pointer; transition: transform 0.3s ease; position: relative; }
+    .icon-container span { color: #fff; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+    .icon-container:hover { transform: translateY(-2px); }
+    .search-container { flex: 1; max-width: 500px; margin: 0 30px; background-color: #ffffff; border-radius: 8px; display: flex; align-items: center; padding: 8px 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .search-container input { flex: 1; border: none; background: transparent; font-size: 14px; outline: none; color: #333; }
+    .search-container i { color: #666; }
+    .right-icons { display: flex; gap: 25px; }
+    .main-content { display: flex; padding: 20px; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    
+    /* Login Section Styles */
+    .login-section {
+      width: 400px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin: 40px auto;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .login-header h2 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .login-header p {
+      color: #666;
+      font-size: 16px;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 14px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      padding: 12px;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      font-size: 15px;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus {
+      border-color: #0071E3;
+      outline: none;
+    }
+
+    .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .remember-me input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+    }
+
+    .forgot-password {
+      color: #0071E3;
+      text-decoration: none;
+    }
+
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+
+    .login-btn {
+      background: #0071E3;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background: #005bb5;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 20px 0;
+      color: #666;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .divider span {
+      padding: 0 10px;
+    }
+
+    .social-login {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .social-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      background: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .social-btn:hover {
+      background: #f8f9fa;
+    }
+
+    .social-btn i {
+      font-size: 18px;
+    }
+
+    .google-btn i {
+      color: #DB4437;
+    }
+
+    .facebook-btn i {
+      color: #4267B2;
+    }
+
+    .signup-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .signup-link a {
+      color: #0071E3;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .signup-link a:hover {
+      text-decoration: underline;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #0071E3;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 4px;
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.3s ease;
+    }
+
+    .notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+      .header {
+        padding: 10px 15px;
+      }
+
+      .left-icons {
+        gap: 15px;
+      }
+
+      .search-container {
+        margin: 0 15px;
+        padding: 6px 12px;
+      }
+
+      .right-icons {
+        gap: 15px;
+      }
+
+      .icon-container span {
+        font-size: 10px;
+      }
+
+      .icon-container i {
+        font-size: 18px;
+      }
+
+      .login-section {
+        width: 90%;
+        margin: 20px auto;
+        padding: 20px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .header {
+        padding: 8px 10px;
+      }
+
+      .left-icons {
+        gap: 10px;
+      }
+
+      .right-icons {
+        gap: 10px;
+      }
+
+      .icon-container img {
+        max-height: 16px;
+      }
+
+      .icon-container span {
+        font-size: 8px;
+      }
+
+      .login-section {
+        padding: 15px;
+      }
+
+      .social-login {
+        flex-direction: column;
+      }
+
+      .login-header h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-content">
+      <div class="sidebar-header">
+        <i class="fas fa-times close-sidebar"></i>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="main_shop.html"><i class="fas fa-store"></i> Shop</a></li>
+        <li><a href="blogpage.html"><i class="fas fa-blog"></i> Blog</a></li>
+        <li><a href="CART_PAGE.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+        <li><a href="account.html"><i class="fas fa-user"></i> Account</a></li>
+        <li><a href="#"><i class="fas fa-heart"></i> Wishlist</a></li>
+        <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+        <li><a href="#"><i class="fas fa-question-circle"></i> Help</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="left-icons">
+      <div class="menu-icon-container">
+        <i class="fas fa-bars" style="color: #fff; font-size: 20px;"></i>
+        <span>Menu</span>
+      </div>
+      <a href="main_shop.html" class="icon-container">
+        <i class="fas fa-store" style="color: #fff; font-size: 20px;"></i>
+        <span>Shop</span>
+      </a>
+      <a href="blogpage.html" class="icon-container">
+        <i class="fas fa-blog" style="color: #fff; font-size: 20px;"></i>
+        <span>Blog</span>
+      </a>
+    </div>
+    <div class="search-container">
+      <input type="text" placeholder="Search for products...">
+      <i class="fas fa-search" style="font-size: 18px;"></i>
+    </div>
+    <div class="right-icons">
+      <a href="CART_PAGE.html" class="icon-container">
+        <i class="fas fa-shopping-cart" style="color: #fff; font-size: 20px;"></i>
+        <span>Cart</span>
+        <span class="cart-count">0</span>
+      </a>
+      <a href="account.html" class="icon-container">
+        <i class="fas fa-user" style="color: #fff; font-size: 20px;"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="login-section">
+      <div class="login-header">
+        <h2>Welcome Back</h2>
+        <p>Please enter your details to sign in</p>
+      </div>
+
+      <form class="login-form" id="loginForm">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required placeholder="Enter your password">
+        </div>
+        <div class="remember-forgot">
+          <label class="remember-me">
+            <input type="checkbox" name="remember">
+            Remember me
+          </label>
+          <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+        <button type="submit" class="login-btn">Sign In</button>
+      </form>
+
+      <div class="divider">
+        <span>or continue with</span>
+      </div>
+
+      <div class="social-login">
+        <button class="social-btn google-btn">
+          <i class="fab fa-google"></i>
+          Google
+        </button>
+        <button class="social-btn facebook-btn">
+          <i class="fab fa-facebook-f"></i>
+          Facebook
+        </button>
+      </div>
+
+      <div class="signup-link">
+        Don't have an account? <a href="signup.html">Sign up</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="login.js"></script>
+  <script src="javascript_sidebar.js"></script>
+</body>
+</html> 

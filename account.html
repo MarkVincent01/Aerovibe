@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Account Page</title>
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #FFFF; color: #333; }
+    .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background-color: #000; border-bottom: 2px solid #0071E3; }
+    .left-icons { display: flex; align-items: center; gap: 25px; }
+    .icon-container { display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none; cursor: pointer; transition: transform 0.3s ease; position: relative; }
+    .icon-container span { color: #fff; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+    .icon-container:hover { transform: translateY(-2px); }
+    .search-container { flex: 1; max-width: 500px; margin: 0 30px; background-color: #ffffff; border-radius: 8px; display: flex; align-items: center; padding: 8px 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .search-container input { flex: 1; border: none; background: transparent; font-size: 14px; outline: none; color: #333; }
+    .search-container i { color: #666; }
+    .right-icons { display: flex; gap: 25px; }
+    .navigation { background-color: #fff; padding: 10px 20px; border-bottom: 1px solid #ddd; }
+    .nav-links { display: flex; gap: 15px; }
+    .nav-links a { color: #000; text-decoration: none; font-size: 14px; }
+    .nav-links a.active { color: var(--accent1); font-weight: bold; }
+    .main-content { display: flex; padding: 20px; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    .account-sidebar { width: 300px; background: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .account-sidebar img { 
+      width: 100%; 
+      height: 180px; 
+      object-fit: cover; 
+      border-radius: 5px; 
+      margin-bottom: 20px; 
+      background: #eee;
+      position: relative;
+    }
+    .profile-image-container {
+      position: relative;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .profile-image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+    .profile-image-container:hover .profile-image-overlay {
+      opacity: 1;
+    }
+    .plus-icon {
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+    }
+    .profile-image-container img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 5px;
+      background: #eee;
+    }
+    .account-sidebar ul { list-style: none; }
+    .account-sidebar li { margin-bottom: 10px; font-size: 15px; color: #222; }
+    .account-sidebar li strong { font-size: 16px; }
+    .account-sidebar li ul { margin-left: 15px; margin-top: 5px; }
+    .account-sidebar li ul li { font-size: 14px; color: #555; margin-bottom: 3px; }
+    .account-sidebar li ul li a { color: #555; text-decoration: none; }
+    .account-sidebar li ul li a:hover { color: var(--accent1); }
+    .account-form-section { flex: 1; background: #fff; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 30px 40px; }
+    .account-form { display: flex; flex-wrap: wrap; gap: 20px 30px; }
+    .form-group { flex: 1 1 45%; display: flex; flex-direction: column; }
+    .form-group.full-width { flex: 1 1 100%; }
+    .form-group label { font-size: 14px; color: #333; margin-bottom: 6px; font-weight: 500; }
+    .form-group input, .form-group select { padding: 10px 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 15px; background: #fafafa; margin-bottom: 0; }
+    .form-group input:focus, .form-group select:focus { border-color: var(--accent1); outline: none; background: #fff; }
+    .update-btn { margin-top: 25px; background: #00b300; color: #fff; border: none; padding: 12px 40px; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.2s; float: right; }
+    .update-btn:hover { background: #009900; }
+    .footer { background: #333; color: #fff; padding: 20px; margin-top: 40px; }
+    .footer-links { display: flex; justify-content: space-around; max-width: 1200px; margin: 0 auto; }
+    .footer-section { font-size: 12px; }
+    .footer-section h4 { margin-bottom: 10px; }
+    .footer-section a { color: #fff; text-decoration: none; display: block; margin: 5px 0; }
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #0071E3;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+    }
+    .notification { position: fixed; top: 20px; right: 20px; background: rgba(0, 0, 0, 0.8); color: white; padding: 10px 20px; border-radius: 4px; z-index: 1000; opacity: 0; transform: translateY(-20px); transition: all 0.3s ease; }
+    .notification.show { opacity: 1; transform: translateY(0); }
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+      .header {
+        padding: 10px 15px;
+      }
+
+      .left-icons {
+        gap: 15px;
+      }
+
+      .search-container {
+        margin: 0 15px;
+        padding: 6px 12px;
+      }
+
+      .right-icons {
+        gap: 15px;
+      }
+
+      .icon-container span {
+        font-size: 10px;
+      }
+
+      .icon-container i {
+        font-size: 18px;
+      }
+
+      .main-content {
+        flex-direction: column;
+        padding: 10px;
+      }
+
+      .account-sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .account-sidebar img {
+        height: 150px;
+      }
+
+      .account-form-section {
+        padding: 20px;
+      }
+
+      .form-group {
+        flex: 1 1 100%;
+      }
+
+      .update-btn {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .footer-section {
+        flex: 1 1 45%;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .header {
+        padding: 8px 10px;
+      }
+
+      .left-icons {
+        gap: 10px;
+      }
+
+      .right-icons {
+        gap: 10px;
+      }
+
+      .icon-container img {
+        max-height: 16px;
+      }
+
+      .icon-container span {
+        font-size: 8px;
+      }
+
+      .account-sidebar {
+        padding: 15px;
+      }
+
+      .account-sidebar img {
+        height: 120px;
+      }
+
+      .account-sidebar li {
+        font-size: 14px;
+      }
+
+      .account-sidebar li strong {
+        font-size: 15px;
+      }
+
+      .account-form-section {
+        padding: 15px;
+      }
+
+      .form-group label {
+        font-size: 12px;
+      }
+
+      .form-group input,
+      .form-group select {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      .footer-section {
+        flex: 1 1 100%;
+        text-align: center;
+      }
+    }
+
+    .payment-methods {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .payment-methods.active {
+      display: block;
+    }
+
+    .payment-card {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    .payment-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .card-type {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-type i {
+      font-size: 24px;
+      color: #666;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .card-actions button {
+      background: none;
+      border: none;
+      color: #666;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 5px;
+      transition: color 0.3s ease;
+    }
+
+    .card-actions button:hover {
+      color: #0071E3;
+    }
+
+    .card-actions button.delete:hover {
+      color: #dc3545;
+    }
+
+    .card-number {
+      font-family: monospace;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .card-expiry {
+      color: #666;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .add-payment-btn {
+      background: #0071E3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
+
+    .add-payment-btn:hover {
+      background: #005bb5;
+    }
+
+    .payment-form {
+      display: none;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+
+    .payment-form.active {
+      display: block;
+    }
+
+    .payment-form .form-group {
+      margin-bottom: 15px;
+    }
+
+    .payment-form .form-row {
+      display: flex;
+      gap: 15px;
+    }
+
+    .payment-form .form-row .form-group {
+      flex: 1;
+    }
+
+    .payment-form-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .payment-form-buttons button {
+      padding: 8px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .save-payment {
+      background: #28a745;
+      color: white;
+      border: none;
+    }
+
+    .save-payment:hover {
+      background: #218838;
+    }
+
+    .cancel-payment {
+      background: #6c757d;
+      color: white;
+      border: none;
+    }
+
+    .cancel-payment:hover {
+      background: #5a6268;
+    }
+
+    .profile-section {
+      text-align: center;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+
+    .profile-image-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #0071E3;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .profile-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+
+    .profile-image-container:hover .profile-image-overlay {
+      opacity: 1;
+    }
+
+    .plus-icon {
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    .profile-info {
+      margin-top: 15px;
+    }
+
+    .profile-name {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .profile-email {
+      color: #666;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    .profile-stats {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: bold;
+      color: #0071E3;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    .profile-actions {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .profile-btn {
+      padding: 8px 20px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .edit-profile-btn {
+      background: #0071E3;
+      color: white;
+    }
+
+    .edit-profile-btn:hover {
+      background: #005bb5;
+    }
+
+    .settings-btn {
+      background: #f8f9fa;
+      color: #333;
+      border: 1px solid #dee2e6;
+    }
+
+    .settings-btn:hover {
+      background: #e9ecef;
+    }
+
+    .wishlist-section {
+      flex: 1;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      padding: 30px 40px;
+      margin-left: 20px;
+    }
+
+    .wishlist-section h2 {
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 24px;
+    }
+
+    .wishlist-products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .wishlist-item {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .wishlist-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .wishlist-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .wishlist-item h3 {
+      font-size: 16px;
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .wishlist-item .price {
+      color: #0071E3;
+      font-weight: bold;
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .wishlist-item .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    .wishlist-item button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
+
+    .add-to-cart {
+      background: #0071E3;
+      color: white;
+    }
+
+    .add-to-cart:hover {
+      background: #005bb5;
+    }
+
+    .remove-from-wishlist {
+      background: #dc3545;
+      color: white;
+    }
+
+    .remove-from-wishlist:hover {
+      background: #c82333;
+    }
+
+    .empty-wishlist {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+    }
+
+    .empty-wishlist i {
+      font-size: 48px;
+      color: #ddd;
+      margin-bottom: 20px;
+    }
+
+    .empty-wishlist p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .empty-wishlist button {
+      background: #0071E3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .empty-wishlist button:hover {
+      background: #005bb5;
+    }
+  </style>
+</head>
+<body>
+
+
+  <header class="header">
+    <div class="left-icons">
+      <a href="#" class="icon-container menu-icon-container">
+        <i class="fas fa-bars menu-icon" style="color: #fff; font-size: 20px;"></i>
+        <span>Menu</span>
+      </a>
+      <a href="main_shop.html" class="icon-container">
+        <i class="fas fa-store" style="color: #fff; font-size: 20px;"></i>
+        <span>Shop</span>
+      </a>
+      <a href="blogpage.html" class="icon-container">
+        <i class="fas fa-blog" style="color: #fff; font-size: 20px;"></i>
+        <span>Blog</span>
+      </a>
+    </div>
+    <div class="search-container">
+      <input type="text" placeholder="Search for products...">
+      <i class="fas fa-search" style="font-size: 18px;"></i>
+    </div>
+    <div class="right-icons">
+      <a href="CART_PAGE.html" class="icon-container">
+        <i class="fas fa-shopping-cart" style="color: #fff; font-size: 20px;"></i>
+        <span>Cart</span>
+        <span class="cart-count">0</span>
+      </a>
+      <a href="account.html" class="icon-container">
+        <i class="fas fa-user" style="color: #fff; font-size: 20px;"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+  </header>
+  
+  <main class="main-content">
+    <aside class="account-sidebar">
+      <div class="profile-section">
+        <div class="profile-image-container">
+          <img src="profile-placeholder.jpg" alt="Profile Picture">
+          <div class="profile-image-overlay" title="Click to change profile picture">
+            <i class="fas fa-plus plus-icon"></i>
+          </div>
+        </div>
+        <div class="profile-info">
+          <div class="profile-name" id="profileName">Your Name</div>
+          <div class="profile-email" id="profileEmail">your.email@example.com</div>
+        </div>
+        <div class="profile-stats">
+          <div class="stat-item">
+            <div class="stat-value" id="orderCount">0</div>
+            <div class="stat-label">Orders</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="wishlistCount">0</div>
+            <div class="stat-label">Wishlist</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="reviewCount">0</div>
+            <div class="stat-label">Reviews</div>
+          </div>
+        </div>
+        <div class="profile-actions">
+          <button class="profile-btn edit-profile-btn" onclick="toggleWishlist()">
+            <i class="fas fa-heart"></i>
+            Wishlist
+          </button>
+        </div>
+      </div>
+      <ul>
+        <li><strong>Account Information</strong>
+          <ul>
+            <li><a href="#personal-info">Personal Information</a></li>
+            <li><a href="#address">Address</a></li>
+            <li><a href="#payment">Payment Methods</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <section class="account-form-section" id="accountFormSection">
+      <form class="account-form" id="accountForm">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" name="firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" name="lastName" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
+        <div class="form-group full-width">
+          <label for="address">Address</label>
+          <input type="text" id="address" name="address" required>
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" id="city" name="city" required>
+        </div>
+        <div class="form-group">
+          <label for="state">State</label>
+          <input type="text" id="state" name="state" required>
+        </div>
+        <div class="form-group">
+          <label for="zipCode">ZIP Code</label>
+          <input type="text" id="zipCode" name="zipCode" required>
+        </div>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <select id="country" name="country" required>
+            <option value="">Select Country</option>
+            <option value="US">United States</option>
+            <option value="CA">Canada</option>
+            <option value="UK">United Kingdom</option>
+            <option value="AU">Australia</option>
+          </select>
+        </div>
+        <button type="submit" class="update-btn">Update Information</button>
+      </form>
+
+      <!-- Payment Methods Section -->
+      <div class="payment-methods" id="paymentMethods">
+        <h3>Payment Methods</h3>
+        <div id="paymentCards">
+          <!-- Payment cards will be added here dynamically -->
+        </div>
+        <button class="add-payment-btn" id="addPaymentBtn">
+          <i class="fas fa-plus"></i> Add Payment Method
+        </button>
+
+        <!-- Add/Edit Payment Form -->
+        <div class="payment-form" id="paymentForm">
+          <h4>Add Payment Method</h4>
+          <form id="newPaymentForm">
+            <div class="form-group">
+              <label for="cardName">Name on Card</label>
+              <input type="text" id="cardName" name="cardName" required>
+            </div>
+            <div class="form-group">
+              <label for="cardNumber">Card Number</label>
+              <input type="text" id="cardNumber" name="cardNumber" maxlength="19" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="expiryDate">Expiry Date</label>
+                <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" maxlength="5" required>
+              </div>
+              <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv" maxlength="3" required>
+              </div>
+            </div>
+            <div class="payment-form-buttons">
+              <button type="button" class="cancel-payment" id="cancelPayment">Cancel</button>
+              <button type="submit" class="save-payment">Save Payment Method</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wishlist Section -->
+    <section class="wishlist-section" id="wishlistSection" style="display: none;">
+      <h2>My Wishlist</h2>
+      <div class="wishlist-products" id="wishlistProducts">
+        <!-- Wishlist items will be displayed here -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <div class="footer-section">
+        <h4>Privacy Policy</h4>
+        <a href="privacy_policy.html">Data Collection & Usage</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#">Terms & Conditions</a>
+      </div>
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <a href="#">Email Us</a>
+        <a href="#">Phone Number</a>
+        <a href="#">Social Media Links</a>
+      </div>
+      <div class="footer-section">
+        <h4>About Us</h4>
+        <a href="#">About Store</a>
+        <a href="#">Mission & Vision</a>
+        <a href="#">Ethics Practices</a>
+      </div>
+      <div class="footer-section">
+        <h4>Customer Service</h4>
+        <a href="#">Help Center</a>
+        <a href="#">Shipping Delivery</a>
+        <a href="#">Payment Methods</a>
+        <a href="#">FAQ</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="account.js"></script>
+  <script src="javascript_sidebar.js"></script>
+</body>
+</html> 
